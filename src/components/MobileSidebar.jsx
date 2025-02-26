@@ -17,5 +17,4 @@ const MobileSidebar = () => {
     </div>
   );
 };
-
 export default MobileSidebar;
