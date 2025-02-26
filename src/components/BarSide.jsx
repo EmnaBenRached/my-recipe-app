@@ -12,22 +12,23 @@ const BarSide = () => {
 };
 
 export default BarSide;
+
 const DesktopSidebar = () => {
   return (
-    <div className="p-2 border-r min-h-screen w-28 block ">
-      <div className="flex flex-col gap-8 sticky top-10 left-0">
+    <div className="p-3 md:p-10 border-r min-h-screen w-28 md:w-64 hidden sm:block">
+      <div className="flex flex-col gap-10 sticky top-10 left-0">
         <div className="w-full">
-          <img src="/logo.svg" alt="logo" className="block md:hidden" />
-          <img src="/mobile-logo.svg" alt="logo" className="hidden md:block" />
+          <img src="/desktop-logo.svg" alt="logo" className="hidden sm:block" />
+          <img src="/mobile-logo.svg" alt="logo" className="block sm:hidden" />
         </div>
-        <ul className="flex flex-col  md:items-start gap-8">
+        <ul className="flex flex-col items-center sm:items-start gap-8">
           <Link to={"/"} className="flex gap-1">
             <Home size={"24"} />
-            <span className="font-bold block md:hidden">Home</span>
+            <span className="font-bold hidden sm:block">Home</span>
           </Link>
           <Link to={"/favorites"} className="flex gap-1">
             <Heart size={"24"} />
-            <span className="font-bold block md:hidden">Favorites</span>
+            <span className="font-bold hidden sm:block">Favorites</span>
           </Link>
         </ul>
       </div>
@@ -39,7 +40,7 @@ const MobileSidebar = () => {
   return (
     <div
       className="flex justify-center gap-10 border-t fixed w-full
-			bottom-0 left-0 bg-white z-10 p-2 sm:hidden
+			bottom-0 left-0 bg-white z-10 p-2 sm:hidden 
 		"
     >
       <Link to={"/"}>
