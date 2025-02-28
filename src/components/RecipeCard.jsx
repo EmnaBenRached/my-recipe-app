@@ -35,7 +35,7 @@ const RecipeCard = ({ recipe, bg, badge }) => {
         <img
           src={recipe.image}
           alt="recipe"
-          className="w-full h-full object-cover rounded-md cursor-pointer "
+          className="w-full h-full object-cover rounded-md cursor-pointer  "
         />
         <div className="absolute bottom-2 left-2 bg-white rounded-full p-1 cursor-pointer flex items-center gap-1 text-sm">
           <Soup size={16} />
