@@ -1,7 +1,41 @@
 import { Search } from "lucide-react";
 import RecipeCard from "../components/RecipeCard";
+import { useEffect, useState } from "react";
 
+const APP_ID = "5c790098";
+const APP_Key = "c721effb649a772446fb4afd6eceb8fb";
 const HomePage = () => {
+  //useState est un hook , recipes contient la valeur d etat par defaut c est un tableau vide
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchRecipes = async (searchQuery) => {
+    setLoading(true);
+    setRecipes([]);
+
+    try {
+      const response = await fetch(
+        `https://api.edamam.com/api/recipes/v2/?app_id=${APP_ID}&app_key=${APP_Key}&q=${searchQuery}&type=public`,
+        {
+          headers: {
+            "Edamam-Account-User": "5c790098",
+          },
+        }
+      );
+      const data = await response.json();
+      setRecipes(data.hits);
+      console.log(data.hits);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  //useEffect fonctionne apres le premier render, avec empty array elle s execute une seule fois
+  useEffect(() => {
+    fetchRecipes("chicken");
+  }, []);
+
   return (
     <div className="bg-[#faf9fb] p-5 flex-1">
       <div className="max-w-scrren-lg mx-auto">
@@ -23,11 +57,20 @@ const HomePage = () => {
         </p>
 
         <div className="grid  gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
+          {loading &&
+            [...Array(9)].map((_, i) => (
+              <div key={i} className="flex w-52 flex-col gap-4">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+            ))}
+
+          {!loading &&
+            recipes.map(({ recipe }, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
         </div>
       </div>
     </div>
