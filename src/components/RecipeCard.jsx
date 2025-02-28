@@ -1,17 +1,18 @@
 import { Heart, HeartPulse, Soup } from "lucide-react";
 
-const RecipeCard = () => {
+const RecipeCard = ({ recipe }) => {
+  const healthLabels = recipe.healthLabels;
   return (
     <div className="flex flex-col rounded-md overflow-hidden p-3 relative bg-[#ecf7d4]">
       <a href="#" className="relative h-32">
         <img
-          src="/1.jpg"
+          src={recipe.image}
           alt="recipe"
           className="w-full h-full object-cover rounded-md cursor-pointer "
         />
         <div className="absolute bottom-2 left-2 bg-white rounded-full p-1 cursor-pointer flex items-center gap-1 text-sm">
           <Soup size={16} />
-          <span>Serving</span>
+          <span>{recipe.yield}</span>
         </div>
 
         <div className="absolute top-1 right-2 bg-white rounded-full p-1 cursor-pointer ">
@@ -22,22 +23,25 @@ const RecipeCard = () => {
         </div>
       </a>
       <div className="flex mt-1 ">
-        <p className="font-bold tracking-wide">Roasted Chiken Recipe</p>
+        <p className="font-bold tracking-wide">{recipe.label}</p>
       </div>
-      <p className="my-2  "> Turkish kitchen</p>
+      <p className="my-2  ">
+        {" "}
+        {recipe.cuisineType[0].charAt(0).toUpperCase() +
+          recipe.cuisineType[0].slice(1)}
+      </p>
       <div className="flex mt-auto gap-2 ">
-        <div className="flex bg-[#d6f497] items-center p-1  rounded-md  ">
-          <HeartPulse size={16} />
-          <span className="text-sm tracking-tighter font-semibold">
-            Gluten-free
-          </span>
-        </div>
-        <div className="flex bg-[#d6f497] items-center p-1  rounded-md  ">
-          <HeartPulse size={16} />
-          <span className="text-sm tracking-tighter font-semibold">
-            Heart-healthy
-          </span>
-        </div>
+        {healthLabels.slice(0, 2).map((label, index) => (
+          <div
+            key={index}
+            className="flex bg-[#d6f497] items-center p-1  rounded-md  "
+          >
+            <HeartPulse size={16} />
+            <span className="text-sm tracking-tighter font-semibold">
+              {label}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
