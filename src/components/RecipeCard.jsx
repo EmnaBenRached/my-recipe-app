@@ -1,7 +1,28 @@
 import { Heart, HeartPulse, Soup } from "lucide-react";
+import { useState } from "react";
 
 const RecipeCard = ({ recipe, bg, badge }) => {
   const healthLabels = recipe.healthLabels;
+  const [isFavourite, setIsFavourite] = useState(
+    localStorage.getItem("favorites")?.includes(recipe.label)
+  );
+
+  const addRecipeToFavorites = () => {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isRecipeAlreadyInFavorites = favorites.some(
+      (favorite) => favorite.recipe.label === recipe.label
+    );
+    if (isRecipeAlreadyInFavorites) {
+      favorites = favorites.filter(
+        (favorite) => favorite.recipe.label !== recipe.label
+      );
+      setIsFavourite(false);
+    } else {
+      favorites.push({ recipe });
+      setIsFavourite(true);
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  };
   return (
     <div
       className={`flex flex-col rounded-md overflow-hidden p-3 relative ${bg}`}
@@ -18,14 +39,26 @@ const RecipeCard = ({ recipe, bg, badge }) => {
         />
         <div className="absolute bottom-2 left-2 bg-white rounded-full p-1 cursor-pointer flex items-center gap-1 text-sm">
           <Soup size={16} />
-          <span>{recipe.yield}</span>
+          <span>{recipe.yield} Servings</span>
         </div>
 
-        <div className="absolute top-1 right-2 bg-white rounded-full p-1 cursor-pointer ">
-          <Heart
-            size={20}
-            className="cursor-pointer hover:text-red-500 hover:fill-red-500"
-          />
+        <div
+          className="absolute top-1 right-2 bg-white rounded-full p-1 cursor-pointer "
+          onClick={(e) => {
+            e.preventDefault();
+            addRecipeToFavorites();
+          }}
+        >
+          {!isFavourite && (
+            <Heart
+              size={20}
+              className="cursor-pointer hover:text-red-500 hover:fill-red-500"
+            />
+          )}
+
+          {isFavourite && (
+            <Heart size={20} className="text-red-500 fill-red-500" />
+          )}
         </div>
       </a>
       <div className="flex mt-1 ">
