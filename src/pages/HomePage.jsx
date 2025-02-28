@@ -37,10 +37,16 @@ const HomePage = () => {
     fetchRecipes("chicken");
   }, []);
 
+  const handleSearchRecipe = (e) => {
+    e.preventDefault(); // prevent the form from submitting
+    const searchQuery = e.target[0].value;
+    fetchRecipes(searchQuery);
+  };
+
   return (
     <div className="bg-[#faf9fb] p-5 flex-1">
       <div className="max-w-scrren-lg mx-auto">
-        <form>
+        <form onSubmit={handleSearchRecipe}>
           <label className="input shadow-md flex items-center gap-2 ">
             <Search size={"24"} />
             <input
