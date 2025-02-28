@@ -1,9 +1,11 @@
 import { Heart, HeartPulse, Soup } from "lucide-react";
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, bg, badge }) => {
   const healthLabels = recipe.healthLabels;
   return (
-    <div className="flex flex-col rounded-md overflow-hidden p-3 relative bg-[#ecf7d4]">
+    <div
+      className={`flex flex-col rounded-md overflow-hidden p-3 relative ${bg}`}
+    >
       <a href="#" className="relative h-32">
         <img
           src={recipe.image}
@@ -34,7 +36,7 @@ const RecipeCard = ({ recipe }) => {
         {healthLabels.slice(0, 2).map((label, index) => (
           <div
             key={index}
-            className="flex bg-[#d6f497] items-center p-1  rounded-md  "
+            className={`flex ${badge} items-center p-1  rounded-md `}
           >
             <HeartPulse size={16} />
             <span className="text-sm tracking-tighter font-semibold">

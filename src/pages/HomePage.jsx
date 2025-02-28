@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import RecipeCard from "../components/RecipeCard";
 import { useEffect, useState } from "react";
+import { getRandomColor } from "../lib/utils";
 
 const APP_ID = "5c790098";
 const APP_Key = "c721effb649a772446fb4afd6eceb8fb";
@@ -69,7 +70,7 @@ const HomePage = () => {
 
           {!loading &&
             recipes.map(({ recipe }, index) => (
-              <RecipeCard key={index} recipe={recipe} />
+              <RecipeCard key={index} recipe={recipe} {...getRandomColor()} />
             ))}
         </div>
       </div>
